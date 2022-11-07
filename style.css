@@ -1,0 +1,309 @@
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@700&display=swap");
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  font-weight: 700;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  height: 100%;
+  font-size: 62.5%; /* 1 rem = 10px; 10px/16px = 62.5% */
+  font-family: "Red Hat Text", sans-serif;
+}
+
+/* Variables */
+:root {
+  --primary: hsl(237, 18%, 59%);
+  --accent: hsl(345, 95%, 68%);
+
+  --white: hsl(0, 0%, 100%);
+  --darkBlue: hsl(236, 21%, 26%);
+  --veryDarkBlue: hsl(235, 16%, 14%);
+  --extremelyDarkBlue: hsl(234, 17%, 12%);
+
+  --fontSizeBody: 1.4rem;
+  --fontSizeHeading: 2.2rem;
+  --fontSizeHuge: 8rem;
+}
+
+/* Style */
+body {
+  background: linear-gradient(var(--extremelyDarkBlue), #2f2439);
+}
+
+h1 {
+  font-size: var(--fontSizeHeading);
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 7.5px;
+  margin-bottom: 8rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+}
+
+.main-content {
+  flex: 1;
+  width: 80%;
+  max-width: 80rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 101;
+}
+
+.main-content h1 {
+  width: 100%;
+  text-align: center;
+}
+
+#clock {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+#clock .period-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#clock .time-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  perspective: 1000px;
+  width: 14.8rem;
+  height: 14.8rem;
+  margin: 0 1.5rem;
+
+  box-shadow: 0rem 1.5rem 0rem 0rem var(--extremelyDarkBlue);
+  border-radius: 1.2rem;
+}
+
+#clock .time-container > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50%;
+}
+
+#clock .time-container > div > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  transform: translateY(50%);
+}
+
+#clock .time-container > div::before,
+#clock .time-container > div::after {
+  content: "";
+  position: absolute;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background-color: var(--extremelyDarkBlue);
+}
+
+#clock .time-container > div.upper::before,
+#clock .time-container > div.upper::after,
+#clock .time-container > div.upper-back::before,
+#clock .time-container > div.upper-back::after {
+  bottom: 0;
+  transform: translateY(50%);
+}
+
+#clock .time-container > div.lower::before,
+#clock .time-container > div.lower::after,
+#clock .time-container > div.lower-back::before,
+#clock .time-container > div.lower-back::after {
+  top: 0;
+  transform: translateY(-50%);
+}
+
+#clock .time-container > div::before {
+  left: -0.8rem;
+}
+
+#clock .time-container > div::after {
+  right: -0.8rem;
+}
+
+#clock .time-container > div.upper {
+  z-index: 101;
+}
+
+#clock .time-container > div.upper,
+#clock .time-container > div.upper-back {
+  border-radius: 1rem 1rem 0 0;
+  background-color: #2c2d44;
+}
+
+#clock .time-container.time-transition > div.upper-back {
+  animation: rotateXUpperBack 1s linear;
+  animation-fill-mode: forwards;
+  transform-origin: bottom;
+}
+
+#clock .time-container > div.lower,
+#clock .time-container > div.lower-back {
+  border-radius: 1rem 1rem 0 0;
+  border-top: 1px solid var(--extremelyDarkBlue);
+  border-radius: 0 0 1rem 1rem;
+  margin-top: 50%;
+  z-index: 101;
+  background-color: var(--darkBlue);
+}
+
+#clock .time-container > div.lower-back {
+  z-index: 100;
+}
+
+#clock .time-container.time-transition > div.lower {
+  animation: rotateXLower 1s linear;
+  animation-fill-mode: forwards;
+  transform-origin: top;
+}
+
+@keyframes rotateXUpperBack {
+  0% {
+    transform: rotateX(-180deg);
+    z-index: 0;
+  }
+  50% {
+    z-index: 0;
+  }
+  50% {
+    z-index: 102;
+  }
+  100% {
+    transform: rotateX(0deg);
+    z-index: 102;
+  }
+}
+
+@keyframes rotateXLower {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+
+#clock .time-container > div.lower > span,
+#clock .time-container > div.lower-back > span {
+  /* 1px because of top border */
+  transform: translateY(calc(-50% - 1px));
+}
+
+#clock .time-container > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  color: var(--accent);
+  font-size: var(--fontSizeHuge);
+  overflow: hidden;
+}
+
+.period-label {
+  margin-top: 4rem;
+  font-size: var(--fontSizeBody);
+  letter-spacing: 0.59rem;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.hills-container {
+  position: relative;
+  height: 25vh;
+  width: 100%;
+  z-index: 100;
+  overflow: hidden;
+  text-align: center;
+  background-size: cover;
+  background-image: url(./images/pattern-hills.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.hills {
+  height: 100%;
+}
+
+.social-medias {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.social-medias > i {
+  margin: 0.5rem;
+  padding: 1rem;
+  font-size: 24px;
+  color: var(--primary);
+}
+
+.social-medias > i:hover {
+  cursor: pointer;
+  color: var(--accent);
+}
+
+/* Attribution */
+.attribution {
+  position: absolute;
+  width: 100%;
+  font-size: 11px;
+  color: var(--primary);
+  text-align: center;
+  bottom: 0.5rem;
+  z-index: 200;
+}
+
+.attribution a {
+  color: var(--accent);
+}
+
+/* Responsiviness */
+@media screen and (max-width: 768px) {
+  :root {
+    --fontSizeBody: 1.4rem;
+    --fontSizeHeading: 3.6rem;
+    --fontSizeHuge: 7.2rem;
+  }
+
+  html {
+    font-size: 31.25%;
+  }
+}
